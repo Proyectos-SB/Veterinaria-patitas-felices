@@ -1,14 +1,34 @@
 .contenedor-footer{
     margin-left: 2%;
     margin-right: 2%;  
-    place-items: center;
+    
     display: flex;
     width: 96%;
-    justify-content: center;
+    justify-content: space-between;
     border: 0.2em solid rgb(0, 0, 0, 0.1); ;
     border-top-left-radius:  3em;
     border-top-right-radius:  3em;
-
-
+    
 }
-
+.sub-contenedor-atajos{
+    margin-left: 2%;
+    margin-right: 2%;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2em;
+    padding: 2em;
+}
+.sub-contenedor-centro {
+    
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    
+}
+.sub-contendor-redes{
+    align-items: center;
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 2em;
+}
