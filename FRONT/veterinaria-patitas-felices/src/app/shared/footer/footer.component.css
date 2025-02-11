@@ -1,0 +1,14 @@
+.contenedor-footer{
+    margin-left: 2%;
+    margin-right: 2%;  
+    place-items: center;
+    display: flex;
+    width: 96%;
+    justify-content: center;
+    border: 0.2em solid rgb(0, 0, 0, 0.1); ;
+    border-top-left-radius:  3em;
+    border-top-right-radius:  3em;
+
+
+}
+
