@@ -1,0 +1,72 @@
+.contenedor-carrusel{
+    margin-top: 10px;
+    width: 100%;
+    height: 80%;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+
+
+.contenedor-destacados{
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+    display: block;
+    gap: 10px;
+    align-items: center;
+
+}
+.destacados{
+
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+}
+
+.destacado-individual{
+    background-image: "./assets/img/fondos/istockphoto-1885866215-1024x1024 3.jpg";
+    width: 100%;
+    height: 100%;
+    margin: 3px;
+    border: 1px solid rgba(0, 0, 0);
+    padding: 3px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.contenedor-reseñas{
+    
+    align-content: center;
+    width: 100%;
+    height: 90%;
+    margin-bottom: 10px;
+    background-color: rgba(95, 103, 81, 0.89);
+   
+}
+
+.reseñas{
+    
+    display: flex;
+    flex-direction: row;
+    gap: 4em;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.reseña-individual{
+    color: rgba(252, 252, 252);
+    border: 4px solid rgba(252, 252, 252);
+    border-radius: 13%;
+    padding: 10px;
+    height: 15em;
+    width: 13em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
