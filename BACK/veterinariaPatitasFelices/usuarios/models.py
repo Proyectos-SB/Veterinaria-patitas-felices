@@ -1,30 +1,71 @@
 from django.db import models
 
 # Create your models here.
+from django.contrib.auth.models import AbstractUser, BaseUserManager , PermissionsMixin
 
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
-from django.db import models
+class CustomUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError('El usuario debe tener un email.')
+        email = self.normalize_email(email)
+        user = self.model(email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
 
-class Usuario(models.Model):
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+        return self.create_user(email, password, **extra_fields)
+
+
+
+
+
+
+class Persona(AbstractUser, PermissionsMixin):
     
-    nombre = models.CharField(max_length=100)
-    apellido = models.CharField(max_length=100)
-    dni = models.CharField(max_length=8, unique=True)
-    fecha_nacimiento = models.DateField()
     email = models.EmailField(unique=True)
+    dni = models.CharField(max_length=8, unique=True)
     direccion = models.CharField(max_length=200)
+    telefono = models.CharField(max_length=20)
+    is_cliente = models.BooleanField(default=False)
+    is_veterinario = models.BooleanField(default=False) 
+    is_administrador_limitado = models.BooleanField(default=False) 
+
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    
+
+    objects = CustomUserManager()
 
     class Meta:
-        abstract = True
-
-class Cliente(Usuario):
-    user = models.OneToOneField('usuarios.CustomUser', on_delete=models.CASCADE, related_name='cliente')
+        verbose_name = 'persona'
+        verbose_name_plural = 'personas'
 
     def __str__(self):
-        return f"{self.nombre} {self.apellido}"
+        return f"{self.first_name} {self.last_name}"
+    
+        
 
-class Medico(Usuario):
+             
+class Cliente(models.Model):
+    persona = models.OneToOneField(Persona, on_delete=models.CASCADE, related_name='cliente')
+
+    def __str__(self):
+        return f"Cliente: {self.persona.first_name} {self.persona.last_name}"
+
+
+class Medico(models.Model):
+    persona = models.OneToOneField(Persona, on_delete=models.CASCADE, related_name='veterinario')
     matricula = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
-        return f"Dr. {self.nombre} {self.apellido}"
+        return f"Dr. {self.persona.first_name} {self.persona.last_name}"
+    
+class Administradorlimitado(models.Model):
+    persona = models.OneToOneField(Persona, on_delete=models.CASCADE, related_name='administrador_limitado')
+    
+    def __str__(self):
+        return f"Administrador limitado: {self.persona.first_name} {self.persona.last_name}"
