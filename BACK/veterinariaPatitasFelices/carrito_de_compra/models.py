@@ -14,6 +14,13 @@ class ItemCarrito(models.Model):
     articulo = models.ForeignKey(Articulo, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField()
 
+    def save(self, *args, **kwargs):
+        # Validar stock antes de guardar
+        if self.cantidad > self.articulo.stock:
+            raise ValueError(f"Stock insuficiente para {self.articulo.nombre}. Solo hay {self.articulo.stock} unidades disponibles.")
+        
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.cantidad} x {self.articulo.nombre}"
 
@@ -33,11 +40,22 @@ class Pedido(models.Model):
     ]
 
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, related_name='pedidos')
-    carrito = models.ForeignKey(CarritoCompra, on_delete=models.SET_NULL, null=True, blank=True)  # Para mantener historial del carrito
-    total = models.DecimalField(max_digits=10, decimal_places=2)
+    items = models.ManyToManyField(ItemCarrito)  # Relación directa con los ítems
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     fecha_pedido = models.DateTimeField(auto_now_add=True)
     metodo_pago = models.CharField(max_length=50, choices=METODO_PAGO_OPCIONES)
     estado = models.CharField(max_length=50, choices=ESTADO_OPCIONES, default='Pendiente')
 
+    def calcular_total(self):
+        total = 0
+        for item in self.items.all():
+            total += item.cantidad * item.articulo.precio
+        return total
+
+    def save(self, *args, **kwargs):
+        # Calcular el total automáticamente antes de guardar
+        self.total = self.calcular_total()
+        super().save(*args, **kwargs)
+
     def __str__(self):
-        return f"Pedido de {self.cliente.persona.email} - Total: ${self.total}"
+        return f"Pedido de {self.cliente} - Total: ${self.total}"
