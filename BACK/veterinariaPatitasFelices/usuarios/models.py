@@ -40,6 +40,15 @@ class Persona(AbstractUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        
+        # Asociar con Cliente si es cliente
+        if self.is_cliente:
+            Cliente.objects.get_or_create(persona=self)
+        else:
+            Cliente.objects.filter(persona=self).delete()
+            
     class Meta:
         verbose_name = 'persona'
         verbose_name_plural = 'personas'
