@@ -25,7 +25,7 @@ class Articulo(models.Model):
     stock = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    categoria = models.ForeignKey(Categoria.pk, null=True)
+    categoria = models.ForeignKey('Categoria', on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return self.nombre
