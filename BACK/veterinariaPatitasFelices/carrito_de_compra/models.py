@@ -52,10 +52,10 @@ class Pedido(models.Model):
             total += item.cantidad * item.articulo.precio
         return total
 
+
     def save(self, *args, **kwargs):
         # Calcular el total automáticamente antes de guardar
         self.total = self.calcular_total()
         super().save(*args, **kwargs)
-
     def __str__(self):
-        return f"Pedido de {self.cliente} - Total: ${self.total}"
+        return f"   Pedido de {self.cliente} - Total: ${self.total}"
