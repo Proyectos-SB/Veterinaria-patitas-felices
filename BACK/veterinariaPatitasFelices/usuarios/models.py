@@ -48,12 +48,6 @@ class Persona(AbstractUser, PermissionsMixin):
             Cliente.objects.get_or_create(persona=self)
         else:
             Cliente.objects.filter(persona=self).delete()
-        
-        # Asociar con Veterinario si es cliente
-        if self.is_veterinario:
-            Veterinario.objects.get_or_create(persona=self)
-        else:
-            Veterinario.objects.filter(persona=self).delete()
             
     class Meta:
         verbose_name = 'persona'
@@ -72,7 +66,7 @@ class Cliente(models.Model):
         return f"Cliente: {self.persona.first_name} {self.persona.last_name}"
 
 
-class Veterinario(models.Model):
+class Medico(models.Model):
     persona = models.OneToOneField(Persona, on_delete=models.CASCADE, related_name='veterinario')
     matricula = models.CharField(max_length=20, unique=True)
 
