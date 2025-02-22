@@ -9,14 +9,12 @@
     margin-bottom: 10px;
     padding-left: 50px;
     padding-right: 50px;
-    
+        
 }
 .radio-banner{
-    border-radius: 40%;
-}
-img{
     border-radius: 40px;
-    
+    width: 100%;
+
 }
 
 
@@ -27,26 +25,69 @@ img{
     display: block;
     gap: 10px;
     align-items: center;
-
+    justify-items: center;
 }
 .destacados{
     
+    width: 30em;
+    height: 30em;
     align-items: center;
     justify-content: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
+.titulo-destacados{
 
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+}
 .destacado-individual{
-    
+    position: relative;
     width: 100%;
     height: 100%;
     margin: 3px;
     border: 1px solid rgba(0, 0, 0);
     padding: 3px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    display:flex ;
+    align-items: end;
+    padding: 2px;
+    justify-content: space-between;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color:white;
+    
+    filter:  brightness(80%) ;
+
+    transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.destacado-individual:hover{
+    filter:  brightness(100%);
+    transform: scale(1.03);
+    z-index: 50;
+
+
+    
+    
+}
+
+
+#destacado-consultaGeneral{
+    background-image: url("/assets/img/servicios/img-consultaGeneral.jpg");
+    
+}
+#destacado-baños{
+    background-image: url("/assets/img/servicios/img-baño.jpg");
+    
+}
+#destacado-petshop{
+    background-image: url("/assets/img/servicios/img-perrocomprando.jpg");
+}
+#destacado-vacunacion{
+    background-image: url("/assets/img/servicios/img-vacuna.jpg");
+    
 }
 
 .contenedor-reseñas{
@@ -69,9 +110,15 @@ img{
     
 }
 
-#destacado-consultaGeneral{
-    background-image: "./assets/img/servicios/img-consultaGeneral.jpg";
-
+.btn-custom {
+    background-color: #ff5722; /* Tu color personalizado */
+    border-color: #ff5722;
+    color: #fff; /* Color del texto */
+  }
+  
+  .btn-custom:hover {
+    background-color: #e64a19;
+    border-color: #e64a19;
   }
 
 
