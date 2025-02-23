@@ -1,0 +1,146 @@
+
+/*carrusel-banner*/
+.contenedor-carrusel{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
+    height: 90%;
+    margin-bottom: 10px;
+    padding-left: 3.12em;
+    padding-right: 3.12em;
+        
+}
+.radio-banner{
+    border-radius: 40px;
+    width: 100%;
+
+}
+/*Destacados*/
+
+.contenedor-destacados{
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+    display: block;
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+    background-color: rgb(152, 201, 60);
+}
+.destacados{
+    
+    width: 35em;
+    height: 35em;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 3px 3px 3px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.titulo-destacados{
+
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgb(152, 201, 60);
+    color: white;
+}
+.destacado-individual{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0);
+    display:flex;
+    align-items: end;
+    justify-content: space-between;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color:rgba(0, 0, 0, 0.893);
+    filter:  brightness(80%) ;
+
+    transition: filter 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+.destacado-individual:hover{
+    filter:  brightness(100%);
+    transform: scale(1.03);
+    z-index: 50;
+
+
+    
+    
+}
+/*Imagenes de Destacados*/
+
+#destacado-consultaGeneral{
+    background-image: url("/assets/img/servicios/img-consultaGeneral.jpg");
+    
+}
+#destacado-baños{
+    background-image: url("/assets/img/servicios/img-baño.jpg");
+    
+}
+#destacado-petshop{
+    background-image: url("/assets/img/servicios/img-perrocomprando.jpg");
+}
+#destacado-vacunacion{
+    background-image: url("/assets/img/servicios/img-vacuna.jpg");
+    
+}
+
+/*botones en destacados*/
+.btn-custom {
+     
+    border-width: medium;
+    border-color: rgba(206, 249, 128, 1);
+    color: rgb(255, 255, 255); 
+    margin-bottom: 5px;
+    margin-right: 3px;
+  }
+  
+  .btn-custom:hover {
+    background-color: rgb(152, 201, 60);
+    border-color: rgb(152, 201, 60);
+  }
+
+  /*Reseñas*/
+
+.contenedor-reseñas{
+    
+    align-content: center;
+    width: 100%;
+    height: 90%;
+    margin-bottom: 10px;
+    background-color: rgba(95, 103, 81, 0.89);
+   
+}
+
+.reseñas{
+    
+    display: flex;
+    flex-direction: row;
+    gap: 4em;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+
+
+.reseña-individual{
+    color: rgba(252, 252, 252);
+    border: 4px solid rgba(252, 252, 252);
+    border-radius: 13%;
+    padding: 10px;
+    height: 15em;
+    width: 13em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+}

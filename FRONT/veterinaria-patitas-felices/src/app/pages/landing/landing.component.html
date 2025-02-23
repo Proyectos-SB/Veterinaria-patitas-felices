@@ -1,0 +1,117 @@
+<div>
+    <div class="contenedor-carrusel">
+        @if (images) {
+            <ngb-carousel>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper" >
+                        <img class="radio-banner" [src]="images[0]" alt="Random first slide" />
+                    </div>
+                    <div class="carousel-caption">
+                        
+                    </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img class="radio-banner" [src]="images[1]" alt="Random second slide" />
+                    </div>
+                    <div class="carousel-caption">
+                        </div>
+                </ng-template>
+                <ng-template ngbSlide>
+                    <div class="picsum-img-wrapper">
+                        <img class="radio-banner" [src]="images[2]" alt="Random third slide" />
+                    </div>
+                    <div class="carousel-caption">
+                        </div>
+                </ng-template>
+            </ngb-carousel>
+        }
+    </div>
+
+    <div class="contenedor-destacados">
+        <div class="titulo-destacados">
+            <h2>Servicios destacados</h2>
+        </div>
+        <div class="destacados">
+            <div id="destacado-consultaGeneral" class="destacado-individual">
+                <h3>Consulta<br> General</h3>
+                <button class="btn btn-custom">
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+            <div id="destacado-vacunacion"class="destacado-individual">
+                <h3>Vacunación</h3>
+                <button class="btn btn-custom">
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+            <div id="destacado-petshop"class="destacado-individual">
+                <h3>Pet-Shop</h3>
+                <button class="btn btn-custom">
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+            <div id="destacado-baños" class="destacado-individual">
+                <h3>Baños</h3>
+                <button class="btn btn-custom">
+                    <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="contenedor-reseñas">
+        <div class="reseñas">
+           <div class="reseña-individual"> 
+                <div>
+                    <h5>titulo</h5>
+                </div>
+                <div>
+                    <div><p>comentario breve del cliente sobre el servicio</p></div>
+                    <div><!--aca irian las estrellas puntaje --></div>
+                
+                </div>
+            </div>
+            <div class="reseña-individual"> 
+                <div>
+                    <h5>titulo</h5>
+                </div>
+                <div>
+                    <div><p>comentario breve del cliente sobre el servicio</p></div>
+                    <div><!--aca irian las estrellas puntaje --></div>
+                
+                </div>
+            </div>
+            <div class="reseña-individual"> 
+                <div>
+                    <h5>titulo</h5>
+                </div>
+                <div>
+                    <div><p>comentario breve del cliente sobre el servicio</p></div>
+                    <div><!--aca irian las estrellas puntaje --></div>
+                
+                </div>
+            </div>
+            <div class="reseña-individual"> 
+                <div>
+                    <h5>titulo</h5>
+                </div>
+                <div>
+                    <div><p>comentario breve del cliente sobre el servicio</p></div>
+                    <div><!--aca irian las estrellas puntaje --></div>
+                
+                </div>
+            </div>
+            <div class="reseña-individual"> 
+                <div>
+                    <h5>titulo</h5>
+                </div>
+                <div>
+                    <div><p>comentario breve del cliente sobre el servicio</p></div>
+                    <div><!--aca irian las estrellas puntaje --></div>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
