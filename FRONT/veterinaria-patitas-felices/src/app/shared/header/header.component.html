@@ -20,9 +20,28 @@
                 <li ><a class="links-del-header" href="">Ubicación</a></li>
             </ul>
         </div>
+        <div>
+            @if (estaAutenticado)
+                    {
+                        <li class="nav-item"><i class="fa-solid fa-arrow-right-from-bracket fa-lg" (click)="logOut()" style="color: #000000;"></i></li>
+                        <li class="nav-item"><a class="nav-link" routerLink="/dashboard">Dashboard</a></li>
+                    }
+        </div>
         <div class="lista-menu-iconos-derecha">
             <ul class="lista-iconos">
-                <li><a routerLink="/registro" ><i class="bi bi-person-fill size-big"></i></a></li>
+                <li><div class="user-menu" (mouseenter)="showMenu = true" (mouseleave)="showMenu = false">
+                    <i class="bi bi-person-fill size-big"></i>
+                    <div class="dropdown-menu" *ngIf="showMenu">
+                        @if (!estaAutenticado){
+                        <li><a routerLink="/registro">Registro</a></li>
+                        <li> <a routerLink="/login">Login</a></li>}
+                        @if (estaAutenticado)
+                        {
+                        <a (click)="logOut()" style="color: #000000;">Cerrar Sesión</a>
+                        }   
+                      </div>
+                    </div>
+                </li>
                 <li><i  class="bi bi-cart"></i></li>
             </ul>
         </div>
