@@ -78,9 +78,34 @@ a:hover{
     color: rgb(193, 193, 76);
 }
 
-a::selection{
-    
-}
+.user-menu {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 10;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: block;
+    gap: 10px;
+    padding: 10px;
+  }
+  .dropdown-menu a {
+    text-decoration: none;
+    padding: 0px 0px;
+    color: rgba(181, 127, 250);
+    transition: 0.3;
+  }
+  
+  .dropdown-menu a:hover {
+    background: #f0f0f0;
+    border-radius: 3px;
+  }
 
 .bi {
     font-size: 24px;
