@@ -44,19 +44,19 @@ class Usuario(AbstractUser, PermissionsMixin):
         
         # Asociar con Cliente si es cliente
         if self.is_cliente:
-            Cliente.objects.get_or_create(persona=self)
+            Cliente.objects.get_or_create(usuario=self)
         else:
-            Cliente.objects.filter(persona=self).delete()
+            Cliente.objects.filter(usuario=self).delete()
 
         # Asociar con Veterinario si es cliente
         if self.is_veterinario:
-            Veterinario.objects.get_or_create(persona=self)
+            Veterinario.objects.get_or_create(usuario=self)
         else:
-            Veterinario.objects.filter(persona=self).delete()
+            Veterinario.objects.filter(usuario=self).delete()
                 
     class Meta:
-        verbose_name = 'persona'
-        verbose_name_plural = 'personas'
+        verbose_name = 'usuario'
+        verbose_name_plural = 'usuario'
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -76,10 +76,10 @@ class Veterinario(models.Model):
     matricula = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
-        return f"Dr. {self.usaurio.first_name} {self.usaurio.last_name}"
+        return f"Dr. {self.usuario.first_name} {self.usuario.last_name}"
     
 class Administradorlimitado(models.Model):
-    usaurio = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name='administrador_limitado')
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE, related_name='administrador_limitado')
     
     def __str__(self):
-        return f"Administrador limitado: {self.usaurio.first_name} {self.usaurio.last_name}"
+        return f"Administrador limitado: {self.usuario.first_name} {self.usuario.last_name}"
