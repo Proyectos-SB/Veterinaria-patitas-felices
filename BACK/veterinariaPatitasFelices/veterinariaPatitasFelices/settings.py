@@ -39,11 +39,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
-    'articulos',
-    'carrito_de_compra',
+    'corsheaders',
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # Importante para habilitar CORS
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    
 ]
 
 ROOT_URLCONF = 'veterinariaPatitasFelices.urls'
@@ -89,8 +94,11 @@ DATABASES = {
         }
     }
 }
-
-
+# CORS_ALLOWED_ALL_ORIGINS = True  Para permitir a todos los dominios
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',  # Si el frontend está en localhost:4200
+                               #'https://tudominio.com', Si el frontend está en un dominio de producción
+]
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -108,7 +116,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-AUTH_USER_MODEL = 'usuarios.Persona'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+AUTH_USER_MODEL = 'usuarios.Usuario'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
