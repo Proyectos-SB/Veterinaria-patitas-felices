@@ -1,93 +1,105 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
-from .models import Cliente
-from rest_framework.decorators import action
-from rest_framework import viewsets, permissions, status
-from rest_framework.response import Response
-from .models import CarritoCompra, ItemCarrito, Pedido, ItemPedido
-from .serializers import CarritoCompraSerializer, ItemCarritoSerializer, PedidoSerializer
-from django.shortcuts import get_object_or_404
-
-class CarritoCompraViewSet(viewsets.ViewSet):
-    permission_classes = [permissions.IsAuthenticated]
-
-    def list(self, request):
-        # Retorna el carrito del cliente autenticado
-        carrito, created = CarritoCompra.objects.get_or_create(cliente=request.user.cliente)
-        serializer = CarritoCompraSerializer(carrito)
-        return Response(serializer.data)
-
-class ItemCarritoViewSet(viewsets.ModelViewSet):
-    serializer_class = ItemCarritoSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        carrito, _ = CarritoCompra.objects.get_or_create(cliente=self.request.user.cliente)
-        return ItemCarrito.objects.filter(carrito=carrito)
-
-    def perform_create(self, serializer):
-        carrito, _ = CarritoCompra.objects.get_or_create(cliente=self.request.user.cliente)
-        serializer.save(carrito=carrito)
-
-# Endpoint para convertir el carrito en pedido
+from .models import Cliente, CarritoCompra, Pedido, ItemCarrito
 
 
-class PedidoViewSet(viewsets.ModelViewSet):
-    serializer_class = PedidoSerializer
-    permission_classes = [permissions.IsAuthenticated]
+def ver_carrito(request):
+    cliente = get_object_or_404(Cliente, persona=request.user)
+    
+    # Intentamos obtener el carrito del cliente
+    try:
+        carrito = cliente.carrito
+    except CarritoCompra.DoesNotExist:
+        carrito = CarritoCompra.objects.create(cliente=cliente)
 
-    def get_queryset(self):
-        return Pedido.objects.filter(cliente=self.request.user.cliente)
+    # Calculamos el total del carrito
+    total = sum(item.articulo.precio * item.cantidad for item in carrito.items.all())
 
-    @action(detail=False, methods=['post'])
-    def crear_pedido(self, request):
-        # Obtener el carrito del cliente
-        carrito, _ = CarritoCompra.objects.get_or_create(cliente=request.user.cliente)
-        items = carrito.items.all()
-        if not items.exists():
-            return Response({"error": "El carrito está vacío."}, status=status.HTTP_400_BAD_REQUEST)
+    context = {
+        'carrito': carrito,
+        'total': total
+    }
+    return render(request, 'articulos/ver_carrito.html', context)
 
-        # Crear el pedido
-        # Se asume que el método de pago se envía en la request
-        metodo_pago = request.data.get('metodo_pago')
-        if not metodo_pago:
-            return Response({"error": "El método de pago es requerido."}, status=status.HTTP_400_BAD_REQUEST)
+
+from django.views.decorators.http import require_POST
+
+@require_POST
+def modificar_cantidad(request, item_id):
+    item = get_object_or_404(ItemCarrito, id=item_id)
+    nueva_cantidad = int(request.POST.get('cantidad', 1))
+
+    # Verificamos que no exceda el stock disponible
+    if nueva_cantidad > item.articulo.stock:
+        messages.error(request, "No hay suficiente stock.")
+    else:
+        item.cantidad = nueva_cantidad
+        item.save()
+    
+    return redirect('articulos:ver_carrito')
+def eliminar_item(request, item_id):
+    item = get_object_or_404(ItemCarrito, id=item_id)
+    item.delete()
+    messages.success(request, "Artículo eliminado del carrito.")
+    return redirect('articulos:ver_carrito')
+
+def confirmar_pedido(request):
+    cliente = get_object_or_404(Cliente, persona=request.user)
+
+    # Verificamos si el cliente tiene un carrito activo
+    try:
+        carrito = cliente.carrito
+    except CarritoCompra.DoesNotExist:
+        messages.error(request, "No tenés un carrito de compras.")
+        return redirect('articulos:lista_articulos')
+
+    # Verificamos que el carrito tenga ítems
+    if not carrito.items.exists():
+        messages.error(request, "Tu carrito está vacío.")
+        return redirect('articulos:lista_articulos')
+
+    # Creamos un nuevo pedido
+    nuevo_pedido = Pedido.objects.create(
+        cliente=cliente,
+        metodo_pago='Tarjeta'  
+    )
+
+    # Agregamos los ítems del carrito al pedido
+    for item in carrito.items.all():
+        # Verificamos que haya suficiente stock
+        if item.cantidad > item.articulo.stock:
+            messages.error(request, f"No hay suficiente stock de {item.articulo.nombre}.")
+            return redirect('articulos:ver_carrito')
         
-        pedido = Pedido.objects.create(cliente=request.user.cliente, metodo_pago=metodo_pago)
-        # Crear los items del pedido
-        for item in items:
-            ItemPedido.objects.create(
-                pedido=pedido,
-                articulo=item.articulo,
-                cantidad=item.cantidad,
-                precio_unitario=item.articulo.precio
-            )
-            # Opcional: reducir stock del artículo
-            item.articulo.stock -= item.cantidad
-            item.articulo.save()
-        pedido.save()  # Actualiza total automáticamente en el método save() del modelo
-        # Vaciar el carrito
-        carrito.items.all().delete()
-        serializer = PedidoSerializer(pedido)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        nuevo_pedido.items.add(item)
+        # Descontamos el stock
+        item.articulo.stock -= item.cantidad
+        item.articulo.save()
 
-    # Endpoint para "pagar" el pedido (simulación)
-    @action(detail=True, methods=['post'])
-    def pagar(self, request, pk=None):
-        pedido = get_object_or_404(Pedido, pk=pk, cliente=request.user.cliente)
-        if pedido.estado != 'Pendiente':
-            return Response({"error": "El pedido ya no está pendiente."}, status=status.HTTP_400_BAD_REQUEST)
-        # Simulación de integración con pasarela de pago:
-        # podría llamar a la API de un proveedor de pagos.
-        #  pago  exitoso:
-        pedido.estado = 'Pagado'
-        pedido.save()
-        serializer = PedidoSerializer(pedido)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+    # Guardamos el pedido con el total calculado
+    nuevo_pedido.save()
+
+    # Vaciamos el carrito después de confirmar el pedido
+    carrito.items.all().delete()
+
+    messages.success(request, "¡Pedido confirmado exitosamente!")
+    return redirect('articulos:lista_pedidos')
 
 
+def confirmar_pedido(request, cliente_id):
+    cliente = Cliente.objects.get(id=cliente_id)
+    carrito = cliente.carrito
+    nuevo_pedido = Pedido.objects.create(cliente=cliente, metodo_pago='Tarjeta')
 
+    for item in carrito.items.all():
+        nuevo_pedido.items.add(item)
 
+    nuevo_pedido.save()
+
+    # Vaciar el carrito después de confirmar el pedido
+    carrito.items.all().delete()
+
+    return redirect('pedidos')
 
 
 
