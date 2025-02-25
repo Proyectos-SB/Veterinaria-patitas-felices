@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 import { LoginRequest } from '../models/loginRequest.model';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -13,32 +13,39 @@ import { LoginRequest } from '../models/loginRequest.model';
 })
 export class LoginComponent {
   form: FormGroup;
+
   constructor(
     private formBuilder: FormBuilder,
-    private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
   ) {
-
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
-
   }
 
   onEnviar(event: Event) {
-    /*event.preventDefault();
+    event.preventDefault();
     if (this.form.valid) {
       const { email, password } = this.form.value as LoginRequest;
-      this.loginService.login({ email, password }).subscribe({
-        next: (authenticated) => {
-          if (authenticated) {
-            console.log("Login successful");
-            alert("Ingreso Correcto!");
+
+      this.authService.login({ email, password }).subscribe({
+        next: (response) => {
+          if (response.access) {
+            console.log("Login exitoso");
+            //alert("Ingreso Correcto!");  // Cambiar el estado de autenticación
+            Swal.fire({
+              title: '��Bienvenido!',
+              text: 'Has iniciado sesión correctamente.',
+              icon:'success',
+              confirmButtonText: 'Aceptar',
+            });
+
             setTimeout(() => {
-              this.router.navigateByUrl("/index");
-            }, 3000);
-          } 
+              this.router.navigateByUrl("/index");  //
+            }, 2000);
+          }
         },
         error: (error) => {
           console.error("Error durante el login:", error);
@@ -46,8 +53,8 @@ export class LoginComponent {
         }
       });
     } else {
-      this.form.markAllAsTouched();
-    }*/
+      this.form.markAllAsTouched();  // Marca todos los campos como tocados
+    }
   }
 
   get Password() {
