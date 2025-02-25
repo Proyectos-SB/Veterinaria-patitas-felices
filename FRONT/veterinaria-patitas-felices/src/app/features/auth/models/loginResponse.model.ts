@@ -1,3 +1,4 @@
-interface LoginResponse {
-    token: string;
+export interface LoginResponse {
+    access: string;
+    refresh: string;
   }
