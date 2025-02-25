@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
+    'mascotas',
+    'vacunas',
+    'articulos',
+    'carrito_de_compra',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
@@ -96,9 +100,11 @@ DATABASES = {
 }
 # CORS_ALLOWED_ALL_ORIGINS = True  Para permitir a todos los dominios
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200',  # Si el frontend está en localhost:4200
+    'http://localhost:4200',
+    'http://localhost:3000',  
                                #'https://tudominio.com', Si el frontend está en un dominio de producción
 ]
+CORS_ALLOW_CREDENTIALS = True
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
