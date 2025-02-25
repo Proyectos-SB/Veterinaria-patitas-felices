@@ -1,0 +1,16 @@
+<p>dashboard-principal works!</p>
+<!-- src/app/dashboard/dashboard.component.html -->
+<div class="dashboard-fondo">
+ <div class='dashboard-contenedor'> 
+      <div class="user-info">
+      <h1>Bienvenido, {{ usuario.username }}!</h1>
+      <p>{{ usuario.email }}</p>
+      <div class="botones-perfil">
+        <button class="btn-perfil" (click)="verPerfil()">Ver Perfil</button>
+        <button class="btn-perfil" (click)="editarPerfil()">Editar Perfil</button>
+      </div>
+    </div>
+  
+    
+  </div>
+</div>
