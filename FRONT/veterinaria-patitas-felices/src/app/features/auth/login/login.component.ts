@@ -41,11 +41,8 @@ export class LoginComponent {
               icon:'success',
               confirmButtonText: 'Aceptar',
             });
-
-            setTimeout(() => {
-              this.router.navigateByUrl("/index");  //
-            }, 2000);
-          }
+            this.router.navigateByUrl("/index");
+          };
         },
         error: (error) => {
           console.error("Error durante el login:", error);

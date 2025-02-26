@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { LoginService } from '../../features/auth/services/login.service';
+import { AuthService } from '../../core/services/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,24 +12,28 @@ import Swal from 'sweetalert2';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-    showMenu = false;
-    estaAutenticado = false;
-  constructor(private loginService: LoginService) {
-     
-    this.loginService.isLogginOn$.subscribe({
+  showMenu = false;
+  estaAutenticado = false;
+
+  constructor(private authService: AuthService) {
+    this.authService.authStatus$.subscribe({
       next: (data) => {
-        this.estaAutenticado = data;
+        console.log(data);
       },
       error: (error) => {
         console.error('No se pudo autenticar:', error);
-        this.estaAutenticado = false;
       }
     });
   }
-  logOut() {
+  ngOnInit(): void {
+    this.authService.authStatus$.subscribe(status => {
+      this.estaAutenticado = status;
+    });
+  }
+  logOut(){
     Swal.fire({
       title: "¿Estás Seguro?",
-      text: "¿seguro que quieres irte =( ?",
+      text: "¿Seguro que quieres irte =( ?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -38,15 +42,14 @@ export class HeaderComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
-          title: "Adiós!",
+          title: "¡Adiós!",
           text: "Te esperamos!",
           icon: "success"
         });
         setTimeout(() => {
-          this.loginService.logOut();
+          this.authService.logOut();
         }, 2000);
       }
     });
   }
 }
-
