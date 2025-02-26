@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Usuario } from '../../features/auth/models/usuario.model';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { RegistroResponse } from '../../features/auth/models/registroResponse.model';
+import { UsuarioInterface } from '../../features/auth/models/usuarioInterface.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +17,11 @@ export class UsuarioService {
 
 
   // Obtener datos del usuario autenticado
-  getUsuario(): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.baseUrl}/me/`, this.authService.getAuthHeaders());
-  }
+  getUsuario(): Observable<UsuarioInterface> {
+    return this.http.get<UsuarioInterface>(`${this.baseUrl}/me/`)}
 
   // Actualizar datos del usuario
-  updateUsuario(data: Partial<Usuario>): Observable<Usuario> {
-    return this.http.put<Usuario>(`${this.baseUrl}/me/editar/`, data, this.authService.getAuthHeaders());
+  updateUsuario(data: Partial<Usuario>): Observable<RegistroResponse> {
+    return this.http.put<RegistroResponse>(`${this.baseUrl}/me/editar/`, data );
   }
 }
