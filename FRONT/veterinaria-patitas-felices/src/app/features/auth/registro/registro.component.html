@@ -27,7 +27,7 @@
                   {
                       @if (lastName?.hasError('required'))
                       {
-                        <p class="text-danger">el Nombre completo es requerido.</p>
+                        <p class="text-danger">el Apellido completo es requerido.</p>
                       }
                       @else if (lastName?.hasError('pattern'))
                       {
@@ -35,6 +35,55 @@
                       }
                   }
                 </div>
+                <div class="form-floating mb-3">
+                  <input type="text"  formControlName="username" class="form-control">
+                  <label for="floatingInput">Username</label>
+                  @if (userName?.errors && userName?.touched)
+                {
+                    @if (userName?.hasError('required'))
+                    {
+                      <p class="text-danger">el Nombre de usuario  es requerido.</p>
+                    }
+                    @else if (userName?.hasError('minlength'))
+                    {
+                      <p class="text-danger">No menos de tres caracteres</p>
+                   }
+                    @else if (userName?.hasError('maxlength'))
+                    {
+                      <p class="text-danger">No más de 10 caracteres.</p>
+                    }
+                    
+                }
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text"  formControlName="telefono" class="form-control">
+                <label for="floatingInput">telefono Celular</label>
+                @if (telefono?.errors && telefono?.touched)
+              {
+                  @if (telefono?.hasError('required'))
+                  {
+                    <p class="text-danger">el número de wpp es requerido.</p>
+                  }
+                  @else if (telefono?.hasError('pattern'))
+                  {
+                    <p class="text-danger">debe ingresar un total de 10 numeros.</p>
+                  }
+              }
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text"  formControlName="direccion" class="form-control">
+              <label for="floatingInput">direccion</label>
+              @if (direccion?.errors && direccion?.touched)
+            {
+                @if (direccion?.hasError('required'))
+                {
+                  <p class="text-danger">la direccion es requerida.</p>
+                }
+                
+                
+            }
+          </div>
+            
                   <div class="form-floating mb-3">
                   <input type="email" formControlName="email" class="form-control">
                   <label for="floatingInput">Email</label>
