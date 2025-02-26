@@ -1,13 +1,13 @@
 <p>dashboard-principal works!</p>
-<!-- src/app/dashboard/dashboard.component.html -->
+
 <div class="dashboard-fondo">
  <div class='dashboard-contenedor'> 
-      <div class="user-info">
+      <div class="user-info" *ngIf="usuario as usuario">
       <h1>Bienvenido, {{ usuario.username }}!</h1>
       <p>{{ usuario.email }}</p>
+      </div>
       <div class="botones-perfil">
-        <button class="btn-perfil" (click)="verPerfil()">Ver Perfil</button>
-        <button class="btn-perfil" (click)="editarPerfil()">Editar Perfil</button>
+        <button class="btn-perfil" routerLink="/perfil" routerLinkActive="router-link-active"  >Ver Perfil</button>
       </div>
     </div>
     <div class="dashboard-opciones">
@@ -16,6 +16,7 @@
       <button class="btn-option" (click)="verMascotas()">Visualizar Mascotas</button>
       <button class="btn-option" (click)="verHistorialCompras()">Historial de Compras</button>
     </div>
+
     
   </div>
-</div>
+  <router-outlet></router-outlet>

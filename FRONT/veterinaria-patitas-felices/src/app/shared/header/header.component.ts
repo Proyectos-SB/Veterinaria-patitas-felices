@@ -19,6 +19,7 @@ export class HeaderComponent {
     this.authService.authStatus$.subscribe({
       next: (data) => {
         console.log(data);
+        this.estaAutenticado = data;
       },
       error: (error) => {
         console.error('No se pudo autenticar:', error);
@@ -46,9 +47,9 @@ export class HeaderComponent {
           text: "Te esperamos!",
           icon: "success"
         });
-        setTimeout(() => {
+        
           this.authService.logOut();
-        }, 2000);
+      
       }
     });
   }

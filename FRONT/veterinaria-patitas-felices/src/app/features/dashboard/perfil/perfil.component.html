@@ -1,1 +1,35 @@
-<p>perfil works!</p>
+<h1>Mi Perfil</h1>
+
+<!-- Modo de visualización -->
+<div *ngIf="!modoEdicion">
+  <p><strong>Usuario:</strong> {{ usuario.username }}</p>
+  <p><strong>Nombre:</strong> {{ usuario.first_name }} {{ usuario.last_name }}</p>
+  <p><strong>Email:</strong> {{ usuario.email }}</p>
+  <p><strong>Teléfono:</strong> {{ usuario.telefono }}</p>
+  <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+  <button (click)="toggleEditar()">Editar Perfil</button>
+</div>
+
+<!-- Modo edición -->
+<div *ngIf="modoEdicion">
+  <label>Usuario:</label>
+  <input type="text" [(ngModel)]="usuario.username">
+
+  <label>Nombre:</label>
+  <input type="text" [(ngModel)]="usuario.first_name">
+
+  <label>Apellido:</label>
+  <input type="text" [(ngModel)]="usuario.last_name">
+
+  <label>Email:</label>
+  <input type="email" [(ngModel)]="usuario.email">
+
+  <label>Teléfono:</label>
+  <input type="text" [(ngModel)]="usuario.telefono">
+
+  <label>Dirección:</label>
+  <input type="text" [(ngModel)]="usuario.direccion">
+
+  <button (click)="guardarCambios()">Guardar</button>
+  <button (click)="toggleEditar()">Cancelar</button>
+</div>
