@@ -9,7 +9,7 @@ admin.site.register(Cliente)
 class UsuarioAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        ('Información Personal', {'fields': ('first_name', 'last_name', 'email', 'fecha_nacimiento')}),
+        ('Información Personal', {'fields': ('first_name', 'last_name', 'email')}),
         ('Datos de Contacto', {'fields': ('direccion', 'telefono')}),
         ('Roles', {'fields': ('is_cliente', 'is_veterinario', 'is_administrador_limitado')}),
         ('Permisos', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
@@ -20,7 +20,7 @@ class UsuarioAdmin(UserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': (
-                'username', 'email', 
+                'username', 'email', 'first_name', 'last_name',
                 'direccion', 'telefono', 'password1', 'password2', 
                 'is_cliente', 'is_veterinario', 'is_administrador_limitado'
             ),
