@@ -3,11 +3,11 @@ import { Router, RouterLink, RouterOutlet,ActivatedRoute } from '@angular/router
 import { UsuarioService,} from '../../../core/services/usuario.service';
 import { UsuarioInterface } from '../../auth/models/usuarioInterface.model';
 import { NgIf } from '@angular/common';
-impor
+
 @Component({
   selector: 'app-dashboard-principal',
   standalone: true,
-  imports: [NgIf,RouterOutlet,ActivatedRoute],
+  imports: [NgIf,RouterOutlet,],
   templateUrl: './dashboard-principal.component.html',
   styleUrl: './dashboard-principal.component.css'
 })
@@ -21,7 +21,7 @@ export class DashboardPrincipalComponent {
     });
   }
   verPerfil(): void {
-    this.router.navigate(['/perfil'],{ relativeTo: this. }));
+    this.router.navigate(['/perfil']);
     
   }
   editarPerfil(): void {
