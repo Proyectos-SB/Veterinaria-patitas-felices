@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MascotaService, Mascota } from './services/mascota.service';
+import { MascotaService } from './services/mascota.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators,} from '@angular/forms';
 import { CommonModule, NgIf } from '@angular/common';
-
+import { Mascota } from './models/mascota.model';
 @Component({
   selector: 'app-mascota',
   

@@ -8,6 +8,7 @@ import { authenticatedGuard } from './core/guards/authenticated.guard';
 import { PerfilComponent } from './features/dashboard/perfil/perfil.component';
 import { MascotaComponent } from './features/dashboard/mascota/mascota.component';
 import { ArticulosComponent } from './features/pet-shop/articulos/articulos.component';
+import { VacunaComponent } from './features/dashboard/vacuna/vacuna.component';
 
 export const routes: Routes = [
     {path: "index", component: LandingComponent},
@@ -17,6 +18,7 @@ export const routes: Routes = [
     
     {path:"perfil", component: PerfilComponent,canActivate: [authGuard]},
     {path:"mascota", component: MascotaComponent,canActivate: [authGuard]},
+    {path:"vacuna", component: VacunaComponent,canActivate: [authGuard]},
     {path:"articulo", component: ArticulosComponent},
     {path:"", redirectTo:"/index", pathMatch:"full"},
     {path:"**", component: LandingComponent}

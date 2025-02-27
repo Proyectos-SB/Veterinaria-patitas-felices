@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Mascota } from '../models/mascota.model';
 
-export interface Mascota {
-  id?: number;
-  nombre: string;
-  raza: string;
-  edad: number;
-  sexo: string;
-  tipo: number; // ID del tipo de mascota
-}
 
 @Injectable({
   providedIn: 'root',
