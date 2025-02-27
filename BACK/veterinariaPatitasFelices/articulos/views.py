@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from serializers import ArticuloSerializer,CategoriaSerializer
-from models import Articulo, Categoria
+
+from .serializers import ArticuloSerializer,CategoriaSerializer
+from .models import Articulo, Categoria
 from rest_framework.permissions import AllowAny 
 from rest_framework.viewsets import ModelViewSet
+
 # Create your views here.
 
 class CategoriaViewSet(ModelViewSet):

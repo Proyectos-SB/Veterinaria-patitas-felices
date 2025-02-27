@@ -7,7 +7,7 @@ export const authenticatedGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  return authService.isAuthenticated().pipe(
+  return authService.authStatus$.pipe(
     map(isAuth => {
       if (isAuth) {
         router.navigate(['/dashboard']); // Redirige si ya está autenticado

@@ -6,17 +6,20 @@ import { DashboardPrincipalComponent } from './features/dashboard/dashboard-prin
 import { authGuard } from './core/guards/auth.guard';
 import { authenticatedGuard } from './core/guards/authenticated.guard';
 import { PerfilComponent } from './features/dashboard/perfil/perfil.component';
+import { MascotaComponent } from './features/dashboard/mascota/mascota.component';
+import { ArticulosComponent } from './features/pet-shop/articulos/articulos.component';
+import { VacunaComponent } from './features/dashboard/vacuna/vacuna.component';
 
 export const routes: Routes = [
     {path: "index", component: LandingComponent},
     {path: "registro", component: RegistroComponent, canActivate: [authenticatedGuard]},
     {path: "login", component: LoginComponent, canActivate: [authenticatedGuard]},
-    {path:"dashboard", component: DashboardPrincipalComponent,canActivate: [authGuard],canActivateChild:[authGuard]
-        ,children:[
-            {path:"perfil", component: PerfilComponent,},
-
-            {path:"**", component: DashboardPrincipalComponent} //Si la ruta no coincide con ninguna de las anteriores, redireccionar al dashboard principal
-    ]},
+    {path:"dashboard", component: DashboardPrincipalComponent,canActivate: [authGuard],canActivateChild:[authGuard]},
+    
+    {path:"perfil", component: PerfilComponent,canActivate: [authGuard]},
+    {path:"mascota", component: MascotaComponent,canActivate: [authGuard]},
+    {path:"vacuna", component: VacunaComponent,canActivate: [authGuard]},
+    {path:"articulo", component: ArticulosComponent},
     {path:"", redirectTo:"/index", pathMatch:"full"},
     {path:"**", component: LandingComponent}
             

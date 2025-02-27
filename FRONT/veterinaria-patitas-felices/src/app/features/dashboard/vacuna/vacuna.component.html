@@ -1,0 +1,34 @@
+<p>vacuna works!</p>
+<div class="container">
+    <h2>Aplicar Vacuna a Mascota</h2>
+    
+    <form (ngSubmit)="onSubmit()" #vacunaForm="ngForm">
+        <div>
+          <label for="mascota">Mascota</label>
+          <select [(ngModel)]="vacuna.mascota" name="mascota" required>
+            <option *ngFor="let mascota of mascotas" [value]="mascota.id">{{ mascota.nombre }}</option>
+          </select>
+        </div>
+      
+        <div>
+          <label for="vacuna">Vacuna</label>
+          <select [(ngModel)]="vacuna.vacuna" name="vacuna" required>
+            <option *ngFor="let vacuna of vacunas" [value]="vacuna.id">{{ vacuna.nombre }}</option>
+          </select>
+        </div>
+      
+        <div>
+          <label for="fecha_aplicacion">Fecha de Aplicación</label>
+          <input [(ngModel)]="vacuna.fecha_aplicacion" name="fecha_aplicacion" type="date" required>
+        </div>
+      
+        <div>
+          <label for="proximo_refuerzo">Próximo Refuerzo</label>
+          <input [(ngModel)]="vacuna.proximo_refuerzo" name="proximo_refuerzo" type="date">
+        </div>
+      
+        <button type="submit" [disabled]="!vacunaForm.valid">Aplicar Vacuna</button>
+      </form>
+      
+  </div>
+  
