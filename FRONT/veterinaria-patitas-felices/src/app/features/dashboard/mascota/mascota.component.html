@@ -1,0 +1,24 @@
+<div class="mascota-container">
+    <h2>{{ editMode ? 'Editar Mascota' : 'Registrar Mascota' }}</h2>
+    <form [formGroup]="mascotaForm" (ngSubmit)="guardarMascota()">
+      <input type="text" formControlName="nombre" placeholder="Nombre" required />
+      <input type="text" formControlName="raza" placeholder="Raza" required />
+      <input type="number" formControlName="edad" placeholder="Edad" required />
+      <select formControlName="sexo">
+        <option value="Macho">Macho</option>
+        <option value="Hembra">Hembra</option>
+      </select>
+      <input type="number" formControlName="tipo" placeholder="Tipo de Mascota (ID)" required />
+      <button type="submit">{{ editMode ? 'Actualizar' : 'Crear' }}</button>
+      <button type="button" (click)="resetForm()" *ngIf="editMode">Cancelar</button>
+    </form>
+  
+    <h3>Listado de Mascotas</h3>
+    <ul>
+      <li *ngFor="let mascota of mascotas">
+        {{ mascota.nombre }} - {{ mascota.raza }} - {{ mascota.edad }} años
+        <button (click)="editarMascota(mascota)">Editar</button>
+      </li>
+    </ul>
+  </div>
+  

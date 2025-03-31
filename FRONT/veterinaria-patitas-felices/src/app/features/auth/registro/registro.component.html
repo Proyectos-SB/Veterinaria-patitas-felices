@@ -1,0 +1,148 @@
+<div>
+    <div class="container p-4">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <main class="form-signup">
+              <form [formGroup]="formRegister" (ngSubmit)="onEnviar($event)">
+                <h1 class="h3 mb-3 fw-normal text-center">Registrarse</h1>
+                <div class="form-floating mb-3">
+                    <input type="text"  formControlName="first_name" class="form-control">
+                    <label for="floatingInput">Nombre</label>
+                    @if (firstName?.errors && firstName?.touched)
+                  {
+                      @if (firstName?.hasError('required'))
+                      {
+                        <p class="text-danger">el Nombre completo es requerido.</p>
+                      }
+                      @else if (firstName?.hasError('pattern'))
+                      {
+                        <p class="text-danger">El formato  debe ser valido.</p>
+                      }
+                  }
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text"  formControlName="last_name" class="form-control">
+                    <label for="floatingInput">Apellido</label>
+                    @if (lastName?.errors && lastName?.touched)
+                  {
+                      @if (lastName?.hasError('required'))
+                      {
+                        <p class="text-danger">el Apellido completo es requerido.</p>
+                      }
+                      @else if (lastName?.hasError('pattern'))
+                      {
+                        <p class="text-danger">El formato  debe ser valido.</p>
+                      }
+                  }
+                </div>
+                <div class="form-floating mb-3">
+                  <input type="text"  formControlName="username" class="form-control">
+                  <label for="floatingInput">Username</label>
+                  @if (userName?.errors && userName?.touched)
+                {
+                    @if (userName?.hasError('required'))
+                    {
+                      <p class="text-danger">el Nombre de usuario  es requerido.</p>
+                    }
+                    @else if (userName?.hasError('minlength'))
+                    {
+                      <p class="text-danger">No menos de tres caracteres</p>
+                   }
+                    @else if (userName?.hasError('maxlength'))
+                    {
+                      <p class="text-danger">No más de 10 caracteres.</p>
+                    }
+                    
+                }
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text"  formControlName="telefono" class="form-control">
+                <label for="floatingInput">telefono Celular</label>
+                @if (telefono?.errors && telefono?.touched)
+              {
+                  @if (telefono?.hasError('required'))
+                  {
+                    <p class="text-danger">el número de wpp es requerido.</p>
+                  }
+                  @else if (telefono?.hasError('pattern'))
+                  {
+                    <p class="text-danger">debe ingresar un total de 10 numeros.</p>
+                  }
+              }
+            </div>
+            <div class="form-floating mb-3">
+              <input type="text"  formControlName="direccion" class="form-control">
+              <label for="floatingInput">direccion</label>
+              @if (direccion?.errors && direccion?.touched)
+            {
+                @if (direccion?.hasError('required'))
+                {
+                  <p class="text-danger">la direccion es requerida.</p>
+                }
+                
+                
+            }
+          </div>
+            
+                  <div class="form-floating mb-3">
+                  <input type="email" formControlName="email" class="form-control">
+                  <label for="floatingInput">Email</label>
+                  @if (email?.errors && email?.touched)
+                  {
+                    @if (email?.hasError('required'))
+                    {
+                      <p class="text-danger">el mail es requerido.</p>
+                    }
+                    @else if (email?.hasError('email'))
+                    {
+                      <p class="text-danger">El formato del email debe ser valido.</p>
+                    }
+                  }
+                </div>
+                
+                <div class="form-floating mb-3">
+                  <input type="password" formControlName="password" class="form-control">
+                  <label for="floatingPassword">Password</label>
+                  @if(password?.errors && password?.touched)
+                  {
+                    @if(password?.hasError('required'))
+                    {
+                      <p class="text-danger">El password es requerido.</p>
+                    }
+                    @else if (password?.hasError('minlength'))
+                    {
+                      <p class="text-danger">El password requiere como mínimo 8 caracteres.</p>
+                 
+                    }
+                    @else if (password?.hasError('maxlength'))
+                      {
+                        <p class="text-danger">El password no debe exeder los 16 carácteres.</p>
+                      }
+                    @else if (password?.hasError('pattern'))
+                      {
+                        <p class="text-danger">'La contraseña debe contener al menos un número, una letra mayúscula, una letra minúscula y un caracter no alfanumérico.</p>
+                      }  
+                  }
+                </div>    
+                <div class="form-floating mb-3">
+                
+                    
+                <input type="password" formControlName="repitePassword" class="form-control">
+                <label for="floatingInput">Repite Contraseña</label>
+                @if (repitePassword?.value != password?.value){
+                    <p class="text-danger">Las contraseñas no coinciden.</p>
+                }
+            
+                
+                </div>    
+                  
+                
+                
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Registrar</button>
+                
+              </form>
+            </main>
+          </div>
+        </div>
+      </div>
+    </div>
